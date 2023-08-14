@@ -1,27 +1,38 @@
 ---
-title: "eds221_day1"
+title: "EDS 221 Day 1"
 author: "carly"
 format: html
 editor: visual
+execute:
+  warning: false
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Working Directories
 
 ```{r}
-1 + 1
+library(tidyverse)
 ```
 
-You can add options to executable code like this
+### Read in Data 
+
+\>\>Use read_csv() to read in data
+
+\>\>Tell it to read the complete path in the parentheses
 
 ```{r}
-#| echo: false
-2 * 2
+energy <- read_csv("data/us_energy.csv")
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+\>\>Create a line chart of energy over time, with color based on the energy type
+
+```{r}
+ggplot(data = energy, aes(x = year, y = quadrillion_btu)) + geom_line(aes(color = type))
+                                                                      
+```
+
+\>\> We can also write the code above by re-writing it to input the data and variables directly in the graph type :
+
+```{r}
+ggplot() +
+geom_point(data = energy, aes(x = year, y = quadrillion_btu, group = type, color = type))
+```
